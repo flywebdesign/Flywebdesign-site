@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build Your Plan | Flynn Brothers Web Design</title>
+<meta name="description" content="Answer five quick questions and we'll shape the perfect restaurant website plan for you. No email required until you're ready." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: {
+    cream:'#FDF8F1', creamy:'#F7EFE3', ink:'#2B2420', cocoa:'#5C5148',
+    ember:{ DEFAULT:'#C2410C', deep:'#9A3412', soft:'#FFF1E7' }, butter:'#EAB308', leaf:'#3F6212',
+  },
+  fontFamily: { display:['Fraunces','Georgia','serif'], body:['"Plus Jakarta Sans"','system-ui','sans-serif'] },
+} } };
+</script>
+<style>
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:#2B2420; background:#FDF8F1; }
+  .font-display { font-family:'Fraunces',Georgia,serif; }
+  .screen { animation:fadein .35s ease; }
+  @keyframes fadein { from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
+  .opt { transition:border-color .15s ease, background .15s ease, transform .15s ease; }
+  .opt:hover { border-color:#C2410C; transform:translateY(-2px); }
+  .opt.picked { border-color:#C2410C; background:#FFF1E7; }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+<header class="bg-cream/90 backdrop-blur border-b border-ink/10">
+  <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2.5 cursor-pointer">
+      <span class="grid place-items-center w-9 h-9 rounded-xl bg-ember text-cream font-display font-bold text-lg">F</span>
+      <span class="font-display font-semibold text-lg leading-none">Flynn Brothers<span class="block font-body text-[10px] font-semibold tracking-[.22em] text-cocoa mt-0.5">WEB DESIGN</span></span>
+    </a>
+    <a href="index.html" class="text-sm font-semibold text-cocoa hover:text-ember transition-colors">&larr; Back to site</a>
+  </nav>
+</header>
+
+<main class="flex-1 flex items-start justify-center px-5 py-10 sm:py-16">
+  <div class="w-full max-w-xl">
+    <!-- progress -->
+    <div id="progress" class="hidden items-center justify-center gap-2 mb-8"></div>
+    <div id="app"></div>
+  </div>
+</main>
+
+<footer class="py-6 text-center text-xs text-cocoa/60">No email needed until you're ready · 3 restaurants a month · First month free</footer>
+
+<script>
+/* ============ STATE ============ */
+const answers = { spot:null, ordering:null, reservations:null, host:null, extras:[] };
+let step = 0;
+
+const ICON = {
+  takeout:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4ZM3 6h18M16 10a4 4 0 0 1-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  dinein:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7a3 3 0 0 0 6 0V2M6 2v20M21 15V2a5 5 0 0 0-5 5v6h5Zm0 0v7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  both:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" stroke-linecap="round"/></svg>',
+  yes:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  no:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>',
+  have:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m8 12 3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chat:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  maybe:'<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.7.3-.9.7-.9 1.7m0 3h.01" stroke-linecap="round"/></svg>',
+  camera:'<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z"/><circle cx="12" cy="13" r="4"/></svg>',
+  truck:'<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8Z" stroke-linejoin="round"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
+  hands:'<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.4-9.3-9.2C1 8 3 4.5 6.4 4.5c2 0 3.3 1.1 4.1 2.3.8-1.2 2.1-2.3 4.1-2.3 3.4 0 5.4 3.5 3.7 7.3C19 16.6 12 21 12 21Z"/></svg>',
+};
+
+/* ============ SCREENS ============ */
+const screens = [
+  { // 0 intro
+    render: () => `
+      <div class="screen text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-ember/25 bg-ember-soft px-4 py-1.5 text-xs font-bold tracking-wide text-ember">BUILD YOUR PLAN · ~60 SECONDS</p>
+        <h1 class="font-display font-bold text-3xl sm:text-4xl mt-5 leading-tight">Every restaurant is different.<br/>Let's shape yours.</h1>
+        <p class="text-cocoa mt-4 max-w-md mx-auto">Five quick questions. At the end, we'll tell you exactly which plan fits — or shape one around what you picked. No email needed to see your answer.</p>
+        <button onclick="next()" class="mt-8 inline-flex items-center gap-2 rounded-full bg-ember px-8 py-4 font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">Let's build it
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>`
+  },
+  { // 1 spot type
+    q:'spot',
+    render: () => qScreen('What kind of spot are you running?', '', [
+      { v:'takeout', icon:ICON.takeout, t:'Takeout-heavy', d:'Pickup and to-go is our bread and butter.' },
+      { v:'dinein',  icon:ICON.dinein,  t:'Mostly dine-in', d:'People come to sit, eat, and stay a while.' },
+      { v:'both',    icon:ICON.both,    t:'A real mix', d:'Solid takeout and solid tables.' },
+    ])
+  },
+  { // 2 ordering
+    q:'ordering',
+    render: () => qScreen('Want customers ordering pickup right from your site?',
+      'Commission-free — you keep every dollar instead of paying apps 30%. <a href="demo.html" target="_blank" class="text-ember font-bold underline underline-offset-2">See it working in our demo ↗</a>', [
+      { v:'yes',  icon:ICON.yes,  t:'Yes, absolutely', d:'That\'s the whole point.' },
+      { v:'have', icon:ICON.have, t:'We already have ordering', d:'We\'ll connect what you use today.' },
+      { v:'no',   icon:ICON.no,   t:'Not yet', d:'Menu, hours & calls first — add ordering anytime.' },
+    ])
+  },
+  { // 3 reservations
+    q:'reservations',
+    render: () => qScreen('Do you take reservations?',
+      'Plenty of local spots don\'t — totally fine. This just tells us what to include.', [
+      { v:'yes',  icon:ICON.yes, t:'Yes, we need booking', d:'We\'ll include a simple reservation request form — free.' },
+      { v:'open', icon:ICON.have, t:'We use OpenTable / Resy', d:'We\'ll embed what you already pay for.' },
+      { v:'no',   icon:ICON.no,  t:'Walk-ins only', d:'We\'ll keep the site clean and skip it.' },
+    ])
+  },
+  { // 4 host
+    q:'host',
+    render: () => `
+      <div class="screen">
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-center">Meet The Host.</h2>
+        <div class="mt-5 rounded-2xl bg-ink text-cream p-5 max-w-md mx-auto">
+          <div class="flex gap-2.5 items-start">
+            <span class="grid place-items-center w-8 h-8 rounded-full bg-ember font-display font-bold shrink-0">EF</span>
+            <p class="rounded-2xl rounded-tl-sm bg-white/10 px-4 py-2.5 text-sm">Welcome in! What are you in the mood for tonight?</p>
+          </div>
+          <p class="text-xs text-cream/60 mt-4">A friendly AI guide on your menu page. It greets customers, recommends dishes, answers allergen questions, and adds to the order — and stays out of the way when people know what they want.</p>
+          <a href="demo.html?feature=host" target="_blank" class="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-butter hover:underline cursor-pointer">Try The Host live in our demo
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <p class="text-center text-cocoa text-sm mt-6 font-semibold">Want The Host on your website?</p>
+        <div class="mt-3 grid gap-3">
+          ${opt('yes', ICON.yes, 'Yes — give them the experience', 'Customers get a guide; you get bigger orders.')}
+          ${opt('no', ICON.no, 'No thanks, keep it simple', 'A clean menu and ordering is plenty.')}
+          ${opt('maybe', ICON.maybe, 'Not sure yet', 'Start without it — upgrading later takes a week.')}
+        </div>
+        ${backBtn()}
+      </div>`
+  },
+  { // 5 extras (multi)
+    q:'extras', multi:true,
+    render: () => `
+      <div class="screen">
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-center">Any extras? <span class="text-cocoa text-lg font-body font-semibold">(pick any, or none)</span></h2>
+        <div class="mt-6 grid gap-3">
+          ${multiOpt('photo', ICON.camera, 'Professional food photography', 'Craveable photos of your real dishes — quoted at your consultation.')}
+          ${multiOpt('delivery', ICON.truck, 'Flat-fee direct delivery', 'A courier for a few dollars per order instead of 30% to the apps.')}
+          ${multiOpt('handsoff', ICON.hands, 'Fully hands-off updates', 'Never touch the site — text us changes, we make them same-day.')}
+        </div>
+        <div class="mt-6 flex items-center justify-center gap-3">
+          ${backBtn(true)}
+          <button onclick="finish()" class="inline-flex items-center gap-2 rounded-full bg-ember px-8 py-3.5 font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">See my plan
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>`
+  },
+];
+
+/* ============ HELPERS ============ */
+function qScreen(title, sub, options){
+  return `<div class="screen">
+    <h2 class="font-display font-bold text-2xl sm:text-3xl text-center">${title}</h2>
+    ${sub?`<p class="text-cocoa text-sm text-center mt-3 max-w-md mx-auto">${sub}</p>`:''}
+    <div class="mt-6 grid gap-3">${options.map(o=>opt(o.v,o.icon,o.t,o.d)).join('')}</div>
+    ${step>1?backBtn():backBtn()}
+  </div>`;
+}
+function opt(v, icon, t, d){
+  return `<button onclick="pick('${v}')" class="opt cursor-pointer text-left rounded-2xl border-2 border-ink/10 bg-white p-5 flex items-center gap-4">
+    <span class="text-ember shrink-0">${icon}</span>
+    <span><span class="block font-bold">${t}</span><span class="block text-sm text-cocoa mt-0.5">${d}</span></span>
+  </button>`;
+}
+function multiOpt(v, icon, t, d){
+  const on = answers.extras.includes(v);
+  return `<button onclick="toggleExtra('${v}')" class="opt ${on?'picked':''} cursor-pointer text-left rounded-2xl border-2 border-ink/10 bg-white p-5 flex items-center gap-4">
+    <span class="text-ember shrink-0">${icon}</span>
+    <span class="flex-1"><span class="block font-bold">${t}</span><span class="block text-sm text-cocoa mt-0.5">${d}</span></span>
+    <span class="w-6 h-6 rounded-md border-2 ${on?'bg-ember border-ember':'border-ink/20'} grid place-items-center shrink-0">${on?'<svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</span>
+  </button>`;
+}
+function backBtn(inline){
+  return `<div class="${inline?'':'mt-6 text-center'}"><button onclick="back()" class="cursor-pointer inline-flex items-center gap-1.5 text-sm font-bold text-cocoa hover:text-ember transition-colors ${inline?'rounded-full border-2 border-ink/15 px-6 py-3.5':''}">
+    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button></div>`;
+}
+
+/* ============ FLOW ============ */
+function render(){
+  document.getElementById('app').innerHTML = screens[step].render();
+  const prog = document.getElementById('progress');
+  if(step>0){ prog.classList.remove('hidden'); prog.classList.add('flex');
+    prog.innerHTML = screens.slice(1).map((_,i)=>`<span class="w-2.5 h-2.5 rounded-full ${i < step ? 'bg-ember':'bg-ink/15'}"></span>`).join('');
+  } else { prog.classList.add('hidden'); prog.classList.remove('flex'); }
+  window.scrollTo({top:0});
+}
+function pick(v){ answers[screens[step].q] = v; next(); }
+function toggleExtra(v){
+  const i = answers.extras.indexOf(v);
+  i>-1 ? answers.extras.splice(i,1) : answers.extras.push(v);
+  render();
+}
+function next(){ step++; render(); }
+function back(){ step--; render(); }
+
+/* ============ RESULT ============ */
+function finish(){
+  const hostWanted = answers.host==='yes';
+  const plan = hostWanted
+    ? { name:'The Host', price:'$149/mo', setup:'$750 setup', dark:true,
+        why:'You want the full experience — the AI guide plus everything in The Classic.' }
+    : { name:'The Classic', price:'$99/mo', setup:'$499 setup', dark:false,
+        why: answers.host==='maybe' ? 'Start simple — The Host can be added any time, and you can try it in our demo first.' : 'A clean, mouth-watering site with everything you picked. Nothing you didn\'t.' };
+
+  const lines = [];
+  lines.push('Custom website, live in 48 hours');
+  if(answers.ordering==='yes') lines.push('Commission-free pickup ordering');
+  if(answers.ordering==='have') lines.push('Your existing ordering, connected & styled');
+  if(answers.ordering==='no') lines.push('Beautiful menu, hours & click-to-call (ordering ready when you are)');
+  lines.push('Photo menu with allergen icons & filters');
+  if(answers.ordering!=='no') lines.push('Smart upsells built into ordering');
+  if(answers.reservations==='yes') lines.push('Reservation request form — included free');
+  if(answers.reservations==='open') lines.push('Your OpenTable/Resy embedded');
+  if(hostWanted) lines.push('The Host — AI menu guide, trained on your menu');
+  lines.push('Google Business & local SEO');
+  lines.push('1-hr consultation + 1-hr onboarding + 30-second updates');
+  if(answers.extras.includes('photo')) lines.push('ADD-ON: Professional food photography (quoted at consultation)');
+  if(answers.extras.includes('delivery')) lines.push('ADD-ON: Flat-fee direct delivery setup');
+  if(answers.extras.includes('handsoff')) lines.push('ADD-ON: Fully hands-off updates — text us, done same-day');
+
+  const summary = `My plan from flywebdesign.org:%0D%0A%0D%0APlan: ${plan.name} (${plan.price} + ${plan.setup})%0D%0A${lines.map(l=>'- '+l).join('%0D%0A')}%0D%0A%0D%0ASpot type: ${answers.spot} · Ordering: ${answers.ordering} · Reservations: ${answers.reservations} · Host: ${answers.host}%0D%0A%0D%0AMy restaurant is: `;
+
+  document.getElementById('progress').classList.add('hidden');
+  document.getElementById('app').innerHTML = `
+    <div class="screen">
+      <p class="text-center text-ember font-bold tracking-wide text-sm uppercase">Your plan, built by you</p>
+      <div class="mt-4 rounded-3xl ${plan.dark?'bg-ink text-cream':'bg-white'} border border-ink/10 p-7 shadow-xl">
+        <div class="flex items-end justify-between gap-3 flex-wrap">
+          <h2 class="font-display font-bold text-3xl">${plan.name}</h2>
+          <p class="font-display font-bold text-2xl ${plan.dark?'text-butter':'text-ember'}">${plan.price} <span class="text-sm font-body font-semibold ${plan.dark?'text-cream/60':'text-cocoa'}">+ ${plan.setup}</span></p>
+        </div>
+        <p class="text-sm ${plan.dark?'text-cream/70':'text-cocoa'} mt-2">${plan.why}</p>
+        <ul class="mt-5 space-y-2 text-sm">
+          ${lines.map(l=>`<li class="flex gap-2.5"><svg class="w-5 h-5 ${plan.dark?'text-butter':'text-leaf'} shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${l}</span></li>`).join('')}
+        </ul>
+        <p class="mt-5 text-xs ${plan.dark?'text-cream/50':'text-cocoa/70'}">First month free · month to month · switch back anytime · we take 3 restaurants a month</p>
+      </div>
+      <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="mailto:spencer@flywebdesign.org?subject=My%20restaurant%20website%20plan&body=${summary}" class="inline-flex justify-center items-center gap-2 rounded-full bg-ember px-8 py-4 font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">Send us this plan</a>
+        <a href="tel:+18475025171" class="inline-flex justify-center items-center gap-2 rounded-full border-2 border-ink/15 px-8 py-4 font-bold hover:border-ember hover:text-ember transition-colors cursor-pointer">Call or text us</a>
+      </div>
+      <p class="text-center mt-5"><button onclick="restart()" class="cursor-pointer text-sm font-bold text-cocoa hover:text-ember underline underline-offset-2 transition-colors">Start over</button></p>
+    </div>`;
+  window.scrollTo({top:0});
+}
+function restart(){ step=0; answers.spot=answers.ordering=answers.reservations=answers.host=null; answers.extras=[]; render(); }
+
+render();
+</script>
+</body>
+</html>
