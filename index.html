@@ -145,7 +145,7 @@ tailwind.config = {
             The Host <span class="rounded-full bg-butter/20 text-yellow-700 text-[10px] font-bold px-2 py-0.5">SIGNATURE</span></p>
           <p class="text-sm text-cocoa mt-1.5">An AI menu guide that greets, recommends, and upsells. Never in the way.</p>
         </button>
-        <a href="demo.html" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-bold text-ember hover:text-ember-deep transition-colors cursor-pointer pt-2">
+        <a href="https://el-fuego-next.vercel.app" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-bold text-ember hover:text-ember-deep transition-colors cursor-pointer pt-2">
           Open the full demo in a new tab
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -154,7 +154,7 @@ tailwind.config = {
       <!-- phone frame -->
       <div class="reveal order-1 lg:order-2 flex justify-center" data-d="1">
         <div class="phone">
-          <iframe id="demo-frame" src="demo.html" title="El Fuego Taqueria — live demo restaurant website" loading="lazy"></iframe>
+          <iframe id="demo-frame" src="https://el-fuego-next.vercel.app" title="El Fuego Taqueria — live demo restaurant website" loading="lazy"></iframe>
         </div>
       </div>
     </div>
@@ -335,14 +335,14 @@ tailwind.config = {
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // feature buttons drive the demo iframe
+  // feature buttons: the live demo is genuinely interactive, so we don't
+  // reload the iframe per button (that would reset whatever the visitor's
+  // doing in it) — just highlight the button and point their eye at the frame.
   const frame = document.getElementById('demo-frame');
   document.querySelectorAll('.feature-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.feature-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const f = btn.dataset.feature;
-      frame.src = 'demo.html' + (f ? '?feature=' + f : '');
       if (window.innerWidth < 1024) frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
