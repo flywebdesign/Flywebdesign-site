@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sports Programs & Clubs | Flynn Brothers Web Design</title>
+<meta name="description" content="Elite websites for competitive sports programs, clubs, and AAU teams — plus online registration, payments, and waivers that fill every roster spot. Built by two local brothers. Free concept before you pay." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      cream:  '#FDF8F1',
+      creamy: '#F7EFE3',
+      ink:    '#171310',
+      cocoa:  '#5C5148',
+      ember:  { DEFAULT:'#C2410C', deep:'#9A3412', soft:'#FFF1E7' },
+      butter: '#EAB308',
+      leaf:   '#3F6212',
+    },
+    fontFamily: {
+      display: ['Fraunces','Georgia','serif'],
+      body:    ['"Plus Jakarta Sans"','system-ui','sans-serif'],
+    },
+  } }
+};
+</script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:#171310; background:#FDF8F1; }
+  .font-display { font-family:'Fraunces',Georgia,serif; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+  .reveal[data-d="1"]{transition-delay:.09s} .reveal[data-d="2"]{transition-delay:.18s} .reveal[data-d="3"]{transition-delay:.27s}
+  .lift { transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+  .lift:hover { transform:translateY(-5px); box-shadow:0 22px 44px -22px rgba(0,0,0,.5); }
+  .swipe { background:linear-gradient(120deg, rgba(194,65,12,.4), rgba(194,65,12,.4)); background-repeat:no-repeat;
+           background-size:0% 40%; background-position:0 88%; animation:swipe 1s .5s ease forwards; }
+  @keyframes swipe { to { background-size:100% 40%; } }
+  .kenburns { animation:kb 14s ease-out forwards; }
+  @keyframes kb { from{transform:scale(1.05)} to{transform:scale(1.15)} }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+    .swipe{animation:none;background-size:100% 40%} .kenburns{animation:none}
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-40 bg-ink/95 backdrop-blur border-b border-white/10 text-cream">
+  <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <span class="grid place-items-center w-9 h-9 rounded-xl bg-ember text-cream font-display font-bold text-lg">F</span>
+      <span class="font-display font-semibold text-lg leading-none">Flynn Brothers<span class="block font-body text-[10px] font-semibold tracking-[.22em] text-cream/50 mt-0.5">WEB DESIGN</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-7 text-sm font-semibold text-cream/70">
+      <a href="#work" class="hover:text-ember transition-colors">Our work</a>
+      <a href="#build" class="hover:text-ember transition-colors">What we build</a>
+      <a href="#pricing" class="hover:text-ember transition-colors">Pricing</a>
+      <a href="index.html" class="hover:text-ember transition-colors">Restaurants</a>
+    </div>
+    <a href="mailto:spencer@flywebdesign.org?subject=Free%20concept%20for%20my%20program" class="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-2.5 text-sm font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">Get a free concept</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden bg-ink text-cream">
+  <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1900&q=70&auto=format&fit=crop" alt="Competitive basketball action" class="absolute inset-0 w-full h-full object-cover opacity-35 kenburns" />
+  <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/50"></div>
+  <div class="relative max-w-6xl mx-auto px-5 pt-20 pb-20 lg:pt-28 lg:pb-28 text-center">
+    <p class="reveal in inline-flex items-center gap-2 rounded-full border border-ember/40 bg-ember/15 px-4 py-1.5 text-xs font-bold tracking-wide text-ember">
+      FOR COMPETITIVE CLUBS &amp; AAU PROGRAMS
+    </p>
+    <h1 class="reveal in mt-6 font-display font-bold leading-[1.03] text-4xl sm:text-5xl lg:text-[4rem] max-w-4xl mx-auto">
+      Fill every roster spot. <span class="swipe italic">Look like the program you actually are.</span>
+    </h1>
+    <p class="reveal in mt-6 text-lg text-cream/75 max-w-2xl mx-auto leading-relaxed">
+      Parents register and pay in one tap. Waivers sign themselves. Your site finally
+      looks as good as your program plays — and it's live in 72 hours, before your season.
+    </p>
+    <div class="reveal in mt-9 flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="#work" class="inline-flex justify-center items-center gap-2 rounded-full bg-ember px-8 py-4 font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">
+        See a program we built →
+      </a>
+      <a href="#pricing" class="inline-flex justify-center items-center gap-2 rounded-full border-2 border-cream/25 px-8 py-4 font-bold text-cream hover:border-ember hover:text-ember transition-colors cursor-pointer">Pricing</a>
+    </div>
+    <p class="reveal in mt-6 text-sm text-cream/50 font-medium">Free custom concept before you pay a cent · Live in 72 hours · Two local brothers</p>
+  </div>
+</section>
+
+<!-- ============ THE PROBLEM ============ -->
+<section class="max-w-6xl mx-auto px-5 py-16 lg:py-20">
+  <div class="text-center max-w-2xl mx-auto mb-10">
+    <p class="reveal text-ember font-bold tracking-wide text-sm uppercase">Sound familiar?</p>
+    <h2 class="reveal font-display font-semibold text-3xl sm:text-4xl mt-2">You're coaching a great program with one hand tied behind your back.</h2>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="reveal rounded-2xl bg-white border border-ink/10 p-6">
+      <p class="font-display font-bold text-xl text-ember">Paperwork chaos</p>
+      <p class="text-sm text-cocoa mt-2">Parents texting you forms, chasing broken sign-up links, and handing you paper waivers you have to file by hand.</p>
+    </div>
+    <div class="reveal rounded-2xl bg-white border border-ink/10 p-6" data-d="1">
+      <p class="font-display font-bold text-xl text-ember">Missed updates</p>
+      <p class="text-sm text-cocoa mt-2">A court change goes out in a group text, half the parents miss it, and your phone blows up an hour before the game.</p>
+    </div>
+    <div class="reveal rounded-2xl bg-white border border-ink/10 p-6" data-d="2">
+      <p class="font-display font-bold text-xl text-ember">Losing talent</p>
+      <p class="text-sm text-cocoa mt-2">Your training is elite. Your site looks like 2009. The best families quietly commit to the program that <em>looks</em> more legit.</p>
+    </div>
+    <div class="reveal rounded-2xl bg-white border border-ink/10 p-6" data-d="3">
+      <p class="font-display font-bold text-xl text-ember">No time to fix it</p>
+      <p class="text-sm text-cocoa mt-2">You're on the court, not behind a keyboard. There's zero bandwidth to wrestle with a website — so it never gets done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE BUILD ============ -->
+<section id="build" class="bg-ink text-cream">
+  <div class="max-w-6xl mx-auto px-5 py-16 lg:py-24">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <p class="reveal text-ember font-bold tracking-wide text-sm uppercase">What we build</p>
+      <h2 class="reveal font-display font-semibold text-3xl sm:text-4xl mt-2">The front door your program deserves — and the engine behind it.</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="reveal rounded-3xl bg-white/5 border border-white/10 p-7">
+        <p class="font-display font-bold text-2xl">One-tap registration &amp; payment</p>
+        <p class="text-cream/70 text-sm mt-2 leading-relaxed">Parents pick a team, sign the waiver, and pay their club fee — in one sitting, on their phone. The money lands the moment a spot is claimed. No links to chase, no paper to file.</p>
+      </div>
+      <div class="reveal rounded-3xl bg-white/5 border border-white/10 p-7" data-d="1">
+        <p class="font-display font-bold text-2xl">Rosters that fill themselves</p>
+        <p class="text-cream/70 text-sm mt-2 leading-relaxed">Real-time capacity per age bracket — 14U, 16U, Varsity. When a division fills, it flips to a waitlist automatically. You always know exactly who's in, who's paid, and who's next.</p>
+      </div>
+      <div class="reveal rounded-3xl bg-white/5 border border-white/10 p-7" data-d="2">
+        <p class="font-display font-bold text-2xl">A schedule parents actually see</p>
+        <p class="text-cream/70 text-sm mt-2 leading-relaxed">Games, times, courts, and divisions in one place — with live status (Scheduled, Delayed, Rainout) that syncs to their phone's calendar. The group-text scramble ends.</p>
+      </div>
+      <div class="reveal rounded-3xl bg-white/5 border border-white/10 p-7" data-d="3">
+        <p class="font-display font-bold text-2xl">An elite brand + sponsor grid</p>
+        <p class="text-cream/70 text-sm mt-2 leading-relaxed">Photo-rich team and player profiles, highlight media, and a professional sponsor wall that helps you monetize. A site that finally matches the level you train at.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR WORK / OG ELITE ============ -->
+<section id="work" class="max-w-6xl mx-auto px-5 py-16 lg:py-24">
+  <div class="grid lg:grid-cols-2 gap-10 items-center">
+    <div class="reveal gal rounded-3xl overflow-hidden border border-ink/10">
+      <img src="https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=1200&q=70&auto=format&fit=crop" alt="Youth basketball program" class="w-full h-full object-cover" />
+    </div>
+    <div>
+      <p class="reveal text-ember font-bold tracking-wide text-sm uppercase">A program we built</p>
+      <h2 class="reveal font-display font-semibold text-3xl sm:text-4xl mt-2">OG Elite Basketball</h2>
+      <p class="reveal text-cocoa mt-4 leading-relaxed">A veteran-owned North Shore youth basketball program and 501(c)(3) foundation. We rebuilt their site from the ground up — photo-rich, brand-accurate, and built so they can update it themselves in seconds. It's the reference for everything on this page.</p>
+      <ul class="reveal mt-5 space-y-2.5 text-sm">
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom, photo-rich brand design</li>
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Coach &amp; program pages, clinic info</li>
+        <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Built to hand off — 30-second updates</li>
+      </ul>
+      <!-- TODO: swap this mailto for the deployed OG Elite URL once it's live -->
+      <a href="mailto:spencer@flywebdesign.org?subject=Can%20I%20see%20the%20OG%20Elite%20site%3F" class="reveal mt-7 inline-flex items-center gap-2 font-bold text-ember hover:text-ember-deep transition-colors cursor-pointer">
+        Ask to see it live
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="bg-creamy border-y border-ink/10">
+  <div class="max-w-6xl mx-auto px-5 py-16 lg:py-20">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="reveal text-ember font-bold tracking-wide text-sm uppercase">Two ways in</p>
+      <h2 class="reveal font-display font-semibold text-3xl sm:text-4xl mt-2">Built so you can't lose.</h2>
+      <p class="reveal text-cocoa mt-3">We build your homepage concept <strong class="text-ink">before you pay a cent</strong>. First month free. Live before your registration window opens, or the monthly's on us until it is.</p>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
+      <!-- The Roster -->
+      <div class="reveal lift rounded-3xl bg-white border border-ink/10 p-8 flex flex-col">
+        <h3 class="font-display font-semibold text-2xl">The Roster</h3>
+        <p class="text-cocoa text-sm mt-1">An elite brand site that makes your program look the part.</p>
+        <div class="mt-5 flex items-end gap-2"><span class="font-display font-bold text-5xl">$99</span><span class="text-cocoa mb-1.5">/month</span></div>
+        <p class="text-sm text-cocoa mt-1">+ $699 one-time setup</p>
+        <ul class="mt-6 space-y-2.5 text-sm flex-1">
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom, photo-rich design — live in 72 hours</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Team &amp; player profiles, coach bios</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Schedule &amp; results, highlight media grid</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Professional sponsor grid</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-leaf shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>30-second updates + done-for-you domain</li>
+        </ul>
+        <a href="mailto:spencer@flywebdesign.org?subject=The%20Roster%20-%20free%20concept%20for%20my%20program" class="mt-7 inline-flex justify-center items-center rounded-full border-2 border-ink/15 px-6 py-3.5 font-bold hover:border-ember hover:text-ember transition-colors cursor-pointer">Get a free concept</a>
+      </div>
+
+      <!-- The Franchise -->
+      <div class="reveal lift rounded-3xl bg-ink text-cream p-8 flex flex-col relative overflow-hidden" data-d="1">
+        <span class="absolute top-5 right-5 rounded-full bg-ember/20 text-ember text-xs font-bold px-3 py-1">THE ENGINE</span>
+        <h3 class="font-display font-semibold text-2xl">The Franchise</h3>
+        <p class="text-cream/70 text-sm mt-1">Everything in The Roster — plus the sign-ups and the money.</p>
+        <div class="mt-5 flex items-end gap-2"><span class="font-display font-bold text-5xl">$199</span><span class="text-cream/70 mb-1.5">/month</span></div>
+        <p class="text-sm text-cream/70 mt-1">+ $1,500 one-time setup</p>
+        <ul class="mt-6 space-y-2.5 text-sm flex-1">
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-ember shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in The Roster</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-ember shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>Online registration + payment</strong> — fees collected on signup</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-ember shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Digital waiver e-signatures — no more paper</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-ember shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Live roster capacity + auto-waitlist</li>
+          <li class="flex gap-2.5"><svg class="w-5 h-5 text-ember shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Schedule dashboard + calendar sync</li>
+        </ul>
+        <a href="mailto:spencer@flywebdesign.org?subject=The%20Franchise%20-%20free%20concept%20for%20my%20program" class="mt-7 inline-flex justify-center items-center rounded-full bg-ember px-6 py-3.5 font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">Get a free concept</a>
+      </div>
+    </div>
+
+    <p class="reveal text-center mt-8 text-sm text-cocoa">Compared to per-registration platforms that nickel-and-dime every signup — this is a flat, local, done-for-you build. Fill five extra roster spots and it's paid for itself.</p>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="max-w-4xl mx-auto px-5 py-20 lg:py-24 text-center">
+  <h2 class="reveal font-display font-semibold text-3xl sm:text-5xl leading-tight">Your season's coming. <span class="italic text-ember">Let's be ready.</span></h2>
+  <p class="reveal text-cocoa mt-5 max-w-xl mx-auto leading-relaxed">
+    Tell us about your program and we'll build a free homepage concept — mapped to
+    your colors, your teams, your brand. See it before you decide a thing. Love it?
+    You're live in 72 hours.
+  </p>
+  <div class="reveal mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+    <a href="mailto:spencer@flywebdesign.org?subject=Free%20concept%20for%20my%20program" class="inline-flex justify-center items-center gap-2 rounded-full bg-ember px-8 py-4 font-bold text-cream hover:bg-ember-deep transition-colors cursor-pointer">Get my free concept</a>
+    <a href="tel:+18475025171" class="inline-flex justify-center items-center gap-2 rounded-full border-2 border-ink/15 px-8 py-4 font-bold hover:border-ember hover:text-ember transition-colors cursor-pointer">Call or text (847) 502-5171</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-ink text-cream/70">
+  <div class="max-w-6xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+    <div class="flex items-center gap-2.5">
+      <span class="grid place-items-center w-8 h-8 rounded-lg bg-ember text-cream font-display font-bold">F</span>
+      <span class="font-display font-semibold text-cream">Flynn Brothers Web Design</span>
+    </div>
+    <p>North Shore &amp; Lake County, IL · <a href="tel:+18475025171" class="hover:text-butter transition-colors">(847) 502-5171</a> · <a href="mailto:spencer@flywebdesign.org" class="hover:text-butter transition-colors">spencer@flywebdesign.org</a></p>
+    <p class="text-xs"><a href="index.html" class="hover:text-butter transition-colors">Restaurants →</a></p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
